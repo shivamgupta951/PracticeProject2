@@ -11,6 +11,7 @@ interface Iuser{
 }
 
 const userSchema = new mongoose.Schema<Iuser>({
+    
     name:{
         type:String,
         required:true
@@ -28,3 +29,6 @@ const userSchema = new mongoose.Schema<Iuser>({
         type:String
     }
 },{timestamps:true})
+
+const User = mongoose.models.User || mongoose.model('User',userSchema);
+export default User;
