@@ -10,9 +10,7 @@ interface Iuser{
     updatedAt?:Date
 }
 
-
 const userSchema = new mongoose.Schema<Iuser>({
-    
     name:{
         type:String,
         required:true
