@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 
 function Register() {
   return (
-    <div className="bg-black min-h-screen flex justify-center items-center text-white px-4">
+    <div className="bg-linear-to-t from-black to-[#031031] via-black  min-h-screen flex justify-center items-center text-white px-4">
         {/* Normal Registeration section */}
       <div className="border-2 border-white rounded-2xl px-10 max-w-md p-8 shadow-lg shadow-yellow-900 bg-linear-to-tr transition-all transform duration-700 ease-in-out from-black via-black to-red-950 hover:bg-linear-to-tl hover:to-indigo-950 hover:scale-110  cursor-grabbing">
         <h1 className="mx-4 text-xl text-center font-semibold mb-4 text-amber-300">
