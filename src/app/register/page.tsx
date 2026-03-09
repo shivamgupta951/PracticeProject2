@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
@@ -18,8 +19,7 @@ function Register() {
         email,
         password,
       });
-
-      console.log(result.data);
+      router.push("/login");
       alert("User Registered Successfully");
     } catch (error: any) {
       alert(error.response?.data?.message);
@@ -68,7 +68,12 @@ function Register() {
           </div>
           <p className="text-[65%] text-center">
             Already have an Account ?{" "}
-            <span className="text-blue-400 hover:underline" onClick={()=>router.push('/login')}>login</span>
+            <span
+              className="text-blue-400 hover:underline"
+              onClick={() => router.push("/login")}
+            >
+              login
+            </span>
           </p>
           <button className="mt-4 mb-2 w-full flex justify-center items-center border border-red-600 transition-all transform duration-300 ease-in-out hover:scale-105 p-1 rounded-sm bg-black text-orange-300 font-medium tracking-wider cursor-grab hover:bg-black hover:bg-linear-to-br from-black via-black to-blue-900">
             Register
@@ -83,7 +88,12 @@ function Register() {
         </div>
 
         {/*  Google Registration Section */}
-        <button className="mt-2 text-sm tracking-tight mb-2 w-full flex justify-center items-center border border-red-600 transition-all transform duration-300 ease-in-out hover:scale-105 p-2 rounded-sm bg-black text-orange-300 font-medium  cursor-grab hover:bg-black hover:bg-linear-to-br from-black via-black to-blue-900">
+        <button
+          className="mt-2 text-sm tracking-tight mb-2 w-full flex justify-center items-center border border-red-600 transition-all transform duration-300 ease-in-out hover:scale-105 p-2 rounded-sm bg-black text-orange-300 font-medium  cursor-grab hover:bg-black hover:bg-linear-to-br from-black via-black to-blue-900"
+          onClick={async () => {
+            await signIn("google",{callbackUrl:"/"});
+          }}
+        >
           <FcGoogle size={18} className="mx-1" />
           <span>Sign Up With Google</span>
         </button>
