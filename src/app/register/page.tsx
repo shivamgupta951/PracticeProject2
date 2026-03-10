@@ -26,7 +26,18 @@ function Register() {
     }
   };
   return (
-    <div className="bg-linear-to-t from-black to-[#031031] via-black  min-h-screen flex justify-center items-center text-white px-4">
+    <div className="relative min-h-screen flex justify-center items-center text-white px-4 overflow-hidden">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+      >
+        <source src="/space.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-black/40 -z-10"></div>
+      
       {/* Normal Registeration section */}
       <div className="border-2 border-white rounded-2xl px-10 max-w-md p-8 shadow-lg shadow-yellow-900 bg-linear-to-tr transition-all transform duration-700 ease-in-out from-black via-black to-red-950 hover:bg-linear-to-tl hover:to-indigo-950 hover:scale-110 relative cursor-grabbing">
         <div className="text-2xl top-3 right-3 animate-spin [animation-duration:2s] hover:[animation-play-state:paused] absolute">
@@ -91,7 +102,7 @@ function Register() {
         <button
           className="mt-2 text-sm tracking-tight mb-2 w-full flex justify-center items-center border border-red-600 transition-all transform duration-300 ease-in-out hover:scale-105 p-2 rounded-sm bg-black text-orange-300 font-medium  cursor-grab hover:bg-black hover:bg-linear-to-br from-black via-black to-blue-900"
           onClick={async () => {
-            await signIn("google",{callbackUrl:"/"});
+            await signIn("google", { callbackUrl: "/" });
           }}
         >
           <FcGoogle size={18} className="mx-1" />
