@@ -17,9 +17,16 @@ function Page() {
   const handleEditDetails = async(e:React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await axios.post('/api/edit');
+      const formData = new FormData();
+      formData.append("name",userName)
+      if(backendImage)
+      {
+        formData.append("file",backendImage)
+      }
+      const result = await axios.post('/api/edit',formData);
+      console.log(result);
     } catch (error) {
-      
+      console.log(error);
     }
   };
   const handleSignOut = async () => {
