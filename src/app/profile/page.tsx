@@ -10,22 +10,30 @@ import { FcOpenedFolder } from "react-icons/fc";
 import axios from "axios";
 
 function Page() {
+  const { update } = useSession();
   const { data } = useSession();
   console.log(data);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const handleEditDetails = async(e:React.FormEvent) => {
+  const handleEditDetails = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const formData = new FormData();
-      formData.append("name",userName)
-      if(backendImage)
-      {
-        formData.append("file",backendImage)
+      formData.append("name", userName);
+      if (backendImage) {
+        formData.append("file", backendImage);
       }
-      const result = await axios.post('/api/edit',formData);
+      const result = await axios.post("/api/edit", formData);
+
+      await update({
+        name: result.data.name,
+        image: result.data.image,
+      });
+      setLoading(false);
       console.log(result);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -52,10 +60,23 @@ function Page() {
   const [backendImage, setBackendImage] = useState<File>();
   const imageInput = useRef<HTMLInputElement>(null);
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/api/user");
+        setUserName(res.data.name);
+        setFrontendImage(res.data.image);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     if (data) {
-      setUserName(data?.user.name as string);
-      setFrontendImage(data?.user.image as string);
+      // fallback (instant UI)
+      setUserName(data.user.name as string);
+      setFrontendImage(data.user.image as string);
     }
+
+    fetchUser(); // overwrite with DB (latest)
   }, [data]);
   return (
     <div className="text-white relative min-h-screen bg-linear-to-br from-red-950 via-black to-red-900 flex justify-center items-center text-2xl">
@@ -66,6 +87,7 @@ function Page() {
             onClick={() => setEditProfileModal(false)}
           ></div>
           <motion.form
+            onClick={(e) => e.stopPropagation()}
             onSubmit={handleEditDetails}
             initial={{ y: -200 }}
             animate={{ y: 0 }}
