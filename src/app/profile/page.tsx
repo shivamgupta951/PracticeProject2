@@ -2,17 +2,17 @@
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { motion } from "framer-motion";
 import { FcOpenedFolder } from "react-icons/fc";
 import axios from "axios";
+import { userDataContext } from "@/context/UserContext";
 
 function Page() {
   const { update } = useSession();
-  const { data } = useSession();
-  console.log(data);
+  const data = useContext(userDataContext);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const handleEditDetails = async (e: React.FormEvent) => {
@@ -72,8 +72,8 @@ function Page() {
 
     if (data) {
       // fallback (instant UI)
-      setUserName(data.user.name as string);
-      setFrontendImage(data.user.image as string);
+      setUserName(data.user?.name as string);
+      setFrontendImage(data.user?.image as string);
     }
 
     fetchUser(); // overwrite with DB (latest)
@@ -101,7 +101,7 @@ function Page() {
               X
             </div>
             <div className="relative w-[200px] h-[200px] border-b-8 border-t-4 p-2 rounded-full hover:border-blue-700">
-              {data?.user.image ? (
+              {data?.user?.image ? (
                 <Image
                   src={frontendImage || "/default.png"}
                   fill
@@ -156,7 +156,7 @@ function Page() {
       )}
 
       <div className="border p-10 px-28 rounded-2xl flex flex-col justify-center items-center space-y-2 relative">
-        {data?.user.image ? (
+        {data?.user?.image ? (
           <div className="relative w-[100px] h-[100px] flex justify-center items-center border-4 rounded-full">
             <Image
               src={frontendImage}
@@ -170,7 +170,7 @@ function Page() {
             <CgProfile />
           </div>
         )}
-        <div>Welcome, {data?.user.name ? data.user.name : "User"}!</div>
+        <div>Welcome, {data?.user?.name ? data.user.name : "User"}!</div>
         <div
           className="absolute border top-0 rounded-bl-2xl text-[60%] p-2 right-0 border-r-0 bg-linear-to-br from-red-700 to-orange-800 via-black cursor-pointer transition-all rounded-se-2xl transform duration-300 ease-in-out animate-pulse tracking-wider px-4 justify-center items-center flex hover:scale-105"
           onClick={() => setEditProfileModal(true)}

@@ -20,10 +20,16 @@ export default function Home() {
               Your Assets
             </div>
             <div className="w-full flex justify-center items-center flex-col space-y-4">
-              <div className="hover:rotate-2 cursor-grab bg-linear-to-br from-red-950  via-black w-[80%] to-red-950 rounded-2xl p-8 px-10 text-center" onClick={()=>navigate.push('/profile')}>
+              <div
+                className="hover:rotate-2 cursor-grab bg-linear-to-br from-red-950  via-black w-[80%] to-red-950 rounded-2xl p-8 px-10 text-center"
+                onClick={() => navigate.push("/profile")}
+              >
                 Profile
               </div>
-              <div className="hover:rotate-2 cursor-grab bg-linear-to-br from-red-950  via-black w-[80%] to-red-950 rounded-2xl p-8 px-10 text-center" onClick={()=>navigate.push('/notes')}>
+              <div
+                className="hover:rotate-2 cursor-grab bg-linear-to-br from-red-950  via-black w-[80%] to-red-950 rounded-2xl p-8 px-10 text-center"
+                onClick={() => navigate.push("/notes")}
+              >
                 Your Notes
               </div>
             </div>
