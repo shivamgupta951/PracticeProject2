@@ -1,3 +1,4 @@
+import authOptions from "@/lib/auth";
 import uploadOnCloudinary from "@/lib/cloudinary";
 import connectDb from "@/lib/db";
 import User from "@/model/user.model";
@@ -7,8 +8,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     await connectDb();
-    const session = await getServerSession();
-    if (!session || session.user.email || session.user.id) {
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user.email) {
       return NextResponse.json(
         {
           message: "user does not have session.",
